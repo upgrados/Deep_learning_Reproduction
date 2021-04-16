@@ -18,7 +18,7 @@ A dataset is required to train the model, if the mini set is used, then the conf
 Also make sure to include the correct (and absolute) data_path to the data. Currently it points to a local path on my machine.
 
 # CRF-Net for Object Detection (Camera and Radar Fusion Network)
-![Radar Augmented Image Example](crfnet/images/imageplus_format.png)
+![Radar Augmented Image Example](images/imageplus_format.png)
 
 This repository provides a neural network for object detection based on camera and radar data. It builds up on the work of [Keras RetinaNet](https://github.com/fizyr/keras-retinanet). 
 The network performs a multi-level fusion of the radar and camera data within the neural network.
@@ -62,7 +62,8 @@ in the config file. The values and curves are saved onto the hard drive.
     * `--render` to show images with predicted bounding boxes during execution
     * `--eval_from_detection_pickle` to load saved detection files from the hard drive instead of running the model to 
     evaluate it.
-    
+   
+
 Example usage: 
 ```bash
 python evaluate_crfnet.py --model saved_models/crf_net.h5 --config configs/crf_net.cfg --st 0.5
@@ -109,7 +110,7 @@ setup.py | Installs the requirements for this repository and registers this repo
 The use of the docker image is optional. It is tested on a Ubuntu 16.04 host system.
 
 1. Build the docker container via 
- 
+
     `docker build --tag crfnet .`
 
 2. Start the docker using GPU 0 and the container name `crfnet_gpu0` via
@@ -118,7 +119,7 @@ The use of the docker image is optional. It is tested on a Ubuntu 16.04 host sys
     2. Specify log dir: `export HOST_LOG_DIR=<HOST_LOG_DIR>`
     3. Specify saved models dir: `export HOST_MODEL_DIR=<HOST_MODEL_DIR>`
     5. Start container: `docker run -it --net=host --gpus '"device=0"' -e USERID=$UID -v $HOST_DATA_DIR:/data/nuscenes -v $HOST_LOG_DIR:/CRFN/crfnet/tb_logs -v $HOST_MODEL_DIR:/CRFN/crfnet/saved_models -e DISPLAY=$DISPLAY --name crfnet_gpu0 crfnet`
- 
+
 
 3. The repository is located at `/CRFN/crfnet` inside the docker and already installed when building the docker. Inside the docker, you start the training with python3 and specify your config file as usual: `python3 train_crfnet.py --config configs/crf_net.cfg`
 Additionally you can connect to it via `docker attach crfnet_gpu0`
