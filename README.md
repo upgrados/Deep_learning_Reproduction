@@ -1,3 +1,22 @@
+# The project
+This is the code that was used to reproduce the resuls from the "A Deep Learning-based Radar and Camera Sensor Fusion Architecture for Object Detection" paper. The original code was altered to make it work on our machine. The original code is from: https://github.com/TUMFTM/CameraRadarFusionNet. We managed to get most of the relevant functions working again with our changes except the code for evaluating the model.
+
+We ran this project on Linux Ubuntu 20.04, using TensorFlow 2.4.1 and python 3.8 (and pip3).
+Not all files could be uploaded to the github, thus the trained models and some visualization results are uploaded to google drive which can be accessed by this link: https://drive.google.com/drive/folders/1KpPfdYSw4xzLBmGnD3San6iEhZ4nnegp?usp=sharing.
+
+Before following the installation below, make sure to install TensorFlow 2.4.1.
+
+## Troubleshooting
+If an error appears such as For "attributeError: module 'tensorflow.python.framework.ops' has no attribute TensorLike" appears then follow the steps below
+- Find the installation folder for Keras (should be somewhere under python3.8/site_packages/Keras) and find keras/tensorflow_backend.py
+- Add the following line somewhere at the top amongst the other imports: "from tensorflow.python.types import core as core_tf_types"
+- Find the line that returns the error and replace it with this: "return isinstance(x, core_tf_types.Tensor) or tf_ops.is_dense_tensor_like(x)"
+
+This should solve most of the problems, if other problems regarding tensorflow pops up in some of the python files, try to find the files and look if there is a line which imports Tensorflow for example like: "import tensorflow as tf" and replace it with: "import tensorflow.compat.v1 as tf". This makes sure the old functions of TensorFlow 1 can be used if TensorFlow 2.* is installed.
+
+A dataset is required to train the model, if the mini set is used, then the config file has to be changed. the data_set variable has to be changed to "data_set = nuscenes, mini"
+Also make sure to include the correct (and absolute) data_path to the data. Currently it points to a local path on my machine.
+
 # CRF-Net for Object Detection (Camera and Radar Fusion Network)
 ![Radar Augmented Image Example](crfnet/images/imageplus_format.png)
 
